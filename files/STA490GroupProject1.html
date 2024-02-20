@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Time Series Analysis of Electric Production in NSW Australia</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Jack Ross and Ian Vanwright " />
+    <script src="STA490GroupProject1_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer01.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# <font size = 7 color = "black">Time Series Analysis of Electric Production in NSW Australia</font>
+]
+.subtitle[
+## <img src="img/NSWPicture.jpeg" width=100 height=100><img src="img/RMarkdown-logocopy.png" width=90 height=100> <img src="img/logo_1copy.png" width=90 height=100>
+]
+.author[
+### <font size = 5 color = "black"> Jack Ross and Ian Vanwright </font>
+]
+.institute[
+### <font size = 6 color = "black">West Chester University of Pennsylvania</font><br>
+]
+.date[
+### <font color = "black" size =4> Prepared for<br> </font> <br> <font color = "gold" size = 6> STA490: Statistics Capstone </font> <br> <br> <font color = "white" size = 3>
+]
+
+---
+
+
+
+
+name:toc
+class:inverse8, top
+background-color: gray
+
+&lt;h1 align="center"&gt; Table of Contents &lt;/h1&gt;
+&lt;BR&gt;
+&lt;table align="center", width = "50%"&gt;
+&lt;tr&gt;
+&lt;td style="text-size:50px; line-height: 1.5; font-variant:small-caps"&gt;
+
+&lt;font size = 6&gt;&lt;b&gt; Research Question &lt;/b&gt;&lt;/font&gt; &lt;br&gt;
+  
+&lt;font size = 6&gt;&lt;b&gt; Background Information &lt;/b&gt;&lt;/font&gt; &lt;br&gt;
+
+&lt;font size = 6&gt;&lt;b&gt; Exploratory Data Analysis &lt;/b&gt;&lt;/font&gt; &lt;br&gt;
+ 
+&lt;font size = 6&gt;&lt;b&gt; Statistical Techniques &lt;/b&gt;&lt;/font&gt; &lt;br&gt;
+
+&lt;font size = 6&gt;&lt;b&gt; Results &lt;/b&gt;&lt;/font&gt; &lt;br&gt;
+
+&lt;font size = 6&gt;&lt;b&gt; Conclusions &lt;/b&gt;&lt;/font&gt; &lt;br&gt;
+
+&lt;font size = 6&gt;&lt;b&gt; Challenges &lt;/b&gt;&lt;/font&gt; &lt;br&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+---
+class:inverse middle center
+name:researchquestion
+
+&lt;h1 align = "center"&gt;Research Question&lt;/h1&gt;
+&lt;BR&gt;
+
+ If we decompose this time series data set, are there any distinct trends or seasonality apparent in the data?
+
+ What is the ideal sample size for the training data set that we want to create from the original data set?
+
+ What forecasting method best minimizes predictive error for this data? 
+
+&lt;div style="text-align: middle;"&gt;
+  &lt;img src="img/australialogo_inPixio.png" width=150 height=100;"&gt;
+&lt;/div&gt;
+
+---
+
+class:inverse middle center
+name:background
+
+&lt;h1 align = "center"&gt;Background Information&lt;/h1&gt;
+&lt;BR&gt;
+
+ This data set was retrieved from kaggle
+
+ The data set tracks the monthly electric production in kilowatt-hours (kWh) from January 1973 to December 2010 for the state of New South Wales, Australia
+
+ The data set contains 456 total observations
+ 
+ Observations were recorded on a monthly basis for this data set
+
+&lt;div style="text-align: middle;"&gt;
+  &lt;img src="img/australialogo_inPixio.png" width=150 height=100 align="center";"&gt;
+&lt;/div&gt;
+
+---
+
+class:inverse middle center
+name:DataSetDescription
+
+&lt;h1 align = "center"&gt;Data Set Description&lt;/h1&gt;
+&lt;BR&gt;
+
+
+---
+
+class:inverse middle center
+name:EDA
+
+&lt;h1 align = "center"&gt;Exploratory Data Analysis&lt;/h1&gt;
+&lt;BR&gt;
+ To begin the exploratory data analysis, we created a subset of 150 observations from the original data set
+
+ Date variable was removed 
+
+ New subset was plotted to assess for trends and seasonality
+
+&lt;div style="text-align: middle;"&gt;
+  &lt;img src="img/TimeSeriesEDAPlot.png" width=600 height=350;"&gt;
+&lt;/div&gt;
+
+---
+
+class:inverse center
+name:techniques
+
+&lt;h1 align = "center"&gt;Analysis of Trends and Seasonality&lt;/h1&gt;
+&lt;BR&gt;
+
+ First we used a STL (Seasonal and Trend decomposition using Loess) and additive decomposition to further analyze the trend and seasonality of the data
+
+&lt;div style="text-align: center;"&gt;
+  &lt;img src="img/TimeSeriesDecompPlot.png" width=800 height=425;"&gt;
+&lt;/div&gt;
+
+
+---
+
+class:inverse center
+name:techniques
+
+&lt;h1 align = "center"&gt;Training Data&lt;/h1&gt;
+&lt;BR&gt;
+
+ Next we tested different sample sizes of our training data in order to minmize model error
+ 
+ These tests were based on the total error from models being created using the ts, stl, and forecast functions in R
+
+&lt;table border = "2" bordercolor="black"  bgcolor="white"  width="90%"&gt;
+  &lt;tr bordercolor="red"&gt;
+    &lt;th&gt;Sample Size&lt;/th&gt;
+    &lt;th&gt;MSE&lt;/th&gt;
+    &lt;th&gt;MAPE&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;144&lt;/td&gt;
+    &lt;td&gt;26.92753&lt;/td&gt;
+    &lt;td&gt;0.0346743&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;109&lt;/td&gt;
+    &lt;td&gt;26.83099&lt;/td&gt;
+    &lt;td&gt;0.0345234&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;73&lt;/td&gt;
+    &lt;td&gt;27.71894&lt;/td&gt;
+    &lt;td&gt;0.0347812&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;48&lt;/td&gt;
+    &lt;td&gt;26.42848&lt;/td&gt;
+    &lt;td&gt;0.0355194&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+ From this table, we can observe that the sample size of 109 for our training data set minmizes the MSE and MAPE
+
+---
+
+class:inverse center
+name:techniques
+
+&lt;h1 align = "center"&gt;Model Building&lt;/h1&gt;
+&lt;BR&gt;
+
+We will test a Holt-Winters model, a Simple Exponential Smoothing Model, a Additive model, and a Multiplicative model
+
+Each model will be used to forecast future time series values outside of the original data set
+
+We will choose a model that is best for this forecasting based on which model best minimizes error terms such as ME and MAPE
+
+&lt;div style="text-align: middle;"&gt;
+  &lt;img src="img/australialogo_inPixio.png" width=150 height=100 align="center";"&gt;
+&lt;/div&gt;
+
+---
+
+class:inverse center
+name:techniques
+
+&lt;h1 align = "center"&gt;Model Selection&lt;/h1&gt;
+&lt;BR&gt;
+
+ Now that we have a training data set with sample size of 109, we can use that data set for forecasting
+ 
+ Eight total models were created, but the table features the three with the lowest MAPE and ME
+
+ First, we must choose a model with minimal error
+
+&lt;table border = "2" bordercolor="black"  bgcolor="white"  width="90%"&gt;
+  &lt;tr bordercolor="red"&gt;
+    &lt;th&gt;Model Type&lt;/th&gt;
+    &lt;th&gt;ME&lt;/th&gt;
+    &lt;th&gt;MAPE&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;HW Additive&lt;/td&gt;
+    &lt;td&gt;-0.0832&lt;/td&gt;
+    &lt;td&gt;2.1235&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;HW Exponential Damped&lt;/td&gt;
+    &lt;td&gt;-0.0235&lt;/td&gt;
+    &lt;td&gt;2.0850&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Simple Exp Smoothing&lt;/td&gt;
+    &lt;td&gt;0.0388&lt;/td&gt;
+    &lt;td&gt;7.8211&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+ Based upon the accuracy metrics for the models we have created, the Holt-Winters Exponential Damped model is the most accurate for forecasting the time series values of this data. We chose this model because it has the smallest MAPE.
+
+---
+
+class:inverse center
+name:results
+
+&lt;h1 align = "center"&gt;Results&lt;/h1&gt;
+&lt;BR&gt;
+
+&lt;div style="text-align: center;"&gt;
+  &lt;img src="img/ForecastPlot1.png" width=800 height=500;"&gt;
+&lt;/div&gt;
+
+---
+
+class:inverse center
+name:conclusion
+
+&lt;h1 align = "center"&gt;Conclusions&lt;/h1&gt;
+&lt;BR&gt;
+
+Overall, in this analysis we discovered that there is a strong seasonality to the electric production in NSW Australia
+
+There is also a trend of an overall increase in electric use over the progression of time
+
+We also determined the optimal size of our training data set to be 109
+
+We also concluded that the Holt-Winters Exponential Damped model is our model of choise for forecasting future values of this data 
+
+&lt;div style="text-align: middle;"&gt;
+  &lt;img src="img/australialogo_inPixio.png" width=150 height=100;"&gt;
+&lt;/div&gt;
+
+---
+class: center, middle
+
+# Thanks!
+
+#Questions?
+
+Slides created via the R packages:
+
+[**xaringan**](https://github.com/yihui/xaringan)&lt;br&gt;
+[gadenbuie/xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
