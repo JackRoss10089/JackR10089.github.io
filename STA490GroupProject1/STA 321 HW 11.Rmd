@@ -1,0 +1,274 @@
+---
+title: "Advanced Time Series Analysis of Electric Production in NSW Australia"
+author: "Jack Ross"
+date: '2023-05-10'
+output: html_document
+---
+
+```{=html}
+
+<style type="text/css">
+
+/* Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML. it is a simple mechanism for adding style (e.g., fonts, colors, spacing) to Web documents. */
+
+h1.title {  /* Title - font specifications of the report title */
+  font-size: 24px;
+  color: DarkRed;
+  text-align: center;
+  font-family: "Gill Sans", sans-serif;
+}
+h4.author { /* Header 4 - font specifications for authors  */
+  font-size: 20px;
+  font-family: system-ui;
+  color: DarkRed;
+  text-align: center;
+}
+h4.date { /* Header 4 - font specifications for the date  */
+  font-size: 18px;
+  font-family: system-ui;
+  color: DarkBlue;
+  text-align: center;
+}
+h1 { /* Header 1 - font specifications for level 1 section title  */
+    font-size: 22px;
+    font-family: "Times New Roman", Times, serif;
+    color: navy;
+    text-align: center;
+}
+h2 { /* Header 2 - font specifications for level 2 section title */
+    font-size: 20px;
+    font-family: "Times New Roman", Times, serif;
+    color: navy;
+    text-align: left;
+}
+
+h3 { /* Header 3 - font specifications of level 3 section title  */
+    font-size: 18px;
+    font-family: "Times New Roman", Times, serif;
+    color: navy;
+    text-align: left;
+}
+
+h4 { /* Header 4 - font specifications of level 4 section title  */
+    font-size: 18px;
+    font-family: "Times New Roman", Times, serif;
+    color: darkred;
+    text-align: left;
+}
+
+body { background-color:white; }
+
+.highlightme { background-color:yellow; }
+
+p { background-color:white; }
+
+</style>
+```
+
+```{r setup, include=FALSE}
+# Detect, install and load packages if needed.
+if (!require("knitr")) {
+   install.packages("knitr")
+   library(knitr)
+}
+if (!require("leaflet")) {
+   install.packages("leaflet")
+   library(leaflet)
+}
+if (!require("EnvStats")) {
+   install.packages("EnvStats")
+   library(EnvStats)
+}
+if (!require("MASS")) {
+   install.packages("MASS")
+   library(MASS)
+}
+if (!require("phytools")) {
+   install.packages("phytools")
+   library(phytools)
+}
+if (!require("pander")) {
+   install.packages("pander")
+   library(pander)
+}
+if (!require("lubridate")) {
+   install.packages("lubridate")
+   library(lubridate)
+}
+if (!require("dplyr")) {
+   install.packages("dplyr")
+   library(dplyr)
+}
+if (!require("psych")) {
+   install.packages("psych")
+   library(psych)
+}
+if (!require("arules")) {
+   install.packages("arules")
+   library(arules)
+}
+if (!require("ISwR")) {
+   install.packages("ISwR")
+   library(ISwR)
+}
+if (!require("readxl")) {
+   install.packages("readxl")
+   library(ISwR)
+}
+if (!require("forecast")) {
+   install.packages("forecast")
+   library(ISwR)
+}
+#
+# specifications of outputs of code in code chunks
+knitr::opts_chunk$set(echo = FALSE,      # include code chunk in the output file
+                      warnings = FALSE,  # sometimes, you code may produce warning messages,
+                                         # you can choose to include the warning messages in
+                                         # the output file. 
+                      messages = FALSE,  #
+                      results = TRUE     # you can also decide whether to include the output
+                                         # in the output file.
+                      )  
+
+
+## Add ECHO = TRUE for submission and ECHO = FALSE for submission
+```
+
+## Introduction
+
+This case study examines a time series data set that tracks the monthly electric production in kilowatt-hours (kWh) from January 1973 to December 2010 for the state of New South Wales, Australia. The data set contains 456 observations. This data set was retrieved from kaggle and uploaded to github. The data is available through the following link: https://raw.githubusercontent.com/JackRoss10089/STA-321/main/Electric_Production.csv. The goal of this case study is to fit three different smoothing models to this time series and test which model produces the most accurate forecast.
+
+## Exploratory Data Analysis
+
+After retrieving the data from github, we must next prepare the data set for analysis. First we must reduce the data set to the 150 most recent observations. Then we remove the date variable from the data set as we do not need it to utilize the ts function. We will hold up the 12 most recent observations as test data and use the other observations as training data.
+
+```{r}
+#Load data from github
+Electric <- read.csv("https://raw.githubusercontent.com/JackRoss10089/STA-321/main/Electric_Production.csv", header = TRUE)[-1]
+
+#Use tail function to extract 150 most recent observations from data set
+Electric0 <- tail(Electric, 150)
+
+#Testing data and Training Data
+test.Electric0 = Electric0$IPG2211A2N[139:150]
+train.Electric0 = Electric0$IPG2211A2N[1:138]
+```
+
+## Model Fitting
+
+Once we have established a training and a testing data set, we can fit various models to this data and test which model has the best accuracy.
+
+```{r}
+#Model Fitting
+Electric.Model=ts(Electric0$IPG2211A2N[1:138], start=2005, frequency = 12)
+fit1 = ses(Electric.Model, h=12)
+fit2 = holt(Electric.Model, initial="optimal", h=12)             ## optimal alpha and beta
+fit3 = holt(Electric.Model,damped=TRUE, h=12 )                   ## additive damping
+fit4 = holt(Electric.Model,exponential=TRUE, damped=TRUE, h =12) ## multiplicative damp
+fit5 = hw(Electric.Model,h=12, seasonal="additive")              ## default h = 10
+fit6 = hw(Electric.Model,h=12, seasonal="multiplicative")
+fit7 = hw(Electric.Model,h=12, seasonal="additive",damped=TRUE)
+fit8 = hw(Electric.Model,h=12, seasonal="multiplicative",damped=TRUE)
+```
+
+```{r}
+#Accuracy Table
+accuracy.table = round(rbind(accuracy(fit1), accuracy(fit2), accuracy(fit3), accuracy(fit4),
+                             accuracy(fit5), accuracy(fit6), accuracy(fit7), accuracy(fit8)),4)
+row.names(accuracy.table)=c("SES","Holt Linear","Holt Add. Damped", "Holt Exp. Damped",
+                            "HW Add.","HW Exp.","HW Add. Damp", "HW Exp. Damp")
+kable(accuracy.table, caption = "The accuracy measures of various exponential smoothing models 
+      based on the training data")
+```
+
+Based upon the accuracy metrics for the models we have created, the Holt-Winters Exponential Damped model is the most accurate for forecasting the time series values of this data. We chose this model because it has the smallest MAPE.
+
+## Model Visualization
+
+Next we will generate plots for the time series data.
+
+```{r}
+par(mfrow=c(2,1), mar=c(3,4,3,3))
+###### plot the original data
+pred.id = 139:150
+plot(1:138, train.Electric0, lwd=2,type="o", ylab="Energy Output (kWh)", xlab="", 
+     xlim=c(1,150), ylim=c(25, 140), cex=0.3,
+     main="Non-seasonal Smoothing Models")
+lines(pred.id, fit1$mean, col="red")
+lines(pred.id, fit2$mean, col="blue")
+lines(pred.id, fit3$mean, col="purple")
+lines(pred.id, fit4$mean, col="navy")
+##
+points(pred.id, fit1$mean, pch=16, col="red", cex = 0.5)
+points(pred.id, fit2$mean, pch=17, col="blue", cex = 0.5)
+points(pred.id, fit3$mean, pch=19, col="purple", cex = 0.5)
+points(pred.id, fit4$mean, pch=21, col="navy", cex = 0.5)
+#points(fit0, col="black", pch=1)
+legend("bottomright", lty=1, col=c("red","blue","purple", "navy"),pch=c(16,17,19,21),
+   c("SES","Linear","Linear Damped", "Multiplicative Damped"), 
+   cex = 0.7, bty="n")
+###########
+plot(1:138, train.Electric0, lwd=2,type="o", ylab="Energy Output (kWh)", xlab="", 
+     xlim=c(1,150), ylim=c(25, 140), cex=0.3,
+     main="Holt-Winters Trend and Seasonal Smoothing Models")
+lines(pred.id, fit5$mean, col="red")
+lines(pred.id, fit6$mean, col="blue")
+lines(pred.id, fit7$mean, col="purple")
+lines(pred.id, fit8$mean, col="navy")
+##
+points(pred.id, fit5$mean, pch=16, col="red", cex = 0.5)
+points(pred.id, fit6$mean, pch=17, col="blue", cex = 0.5)
+points(pred.id, fit7$mean, pch=19, col="purple", cex = 0.5)
+points(pred.id, fit8$mean, pch=21, col="navy", cex = 0.5)
+###
+legend("bottomright", lty=1, col=c("red","blue","purple", "navy"),pch=c(16,17,19,21),
+   c("HW Additive","HW Multiplicative","HW Additive Damped", "HW Exponential Damped"), 
+   cex = 0.7, bty="n")
+```
+
+We can see from the above accuracy table that HW’s linear trend with an exponential damped seasonal model is the best of the eight smoothing models. This is consistent with the patterns in the original serial plot.
+
+Since we train the model with the training data and identify the best model using both training and testing data. Both methods yield the same results. To use the model for real-forecast, we need to refit the model using the entire data to update the smoothing parameters in the final working model.
+
+```{r}
+acc.fun = function(test.data, mod.obj){
+  PE=100*(test.data-mod.obj$mean)/mod.obj$mean
+  MAPE = mean(abs(PE))
+  ###
+  E=test.data-mod.obj$mean
+  MSE=mean(E^2)
+  ###
+  accuracy.metric=c(MSE=MSE, MAPE=MAPE)
+  accuracy.metric
+}
+
+pred.accuracy = rbind(SES =acc.fun(test.data=test.Electric0, mod.obj=fit1),
+                      Holt.Add =acc.fun(test.data=test.Electric0, mod.obj=fit2),
+                      Holt.Add.Damp =acc.fun(test.data=test.Electric0, mod.obj=fit3),
+                      Holt.Exp =acc.fun(test.data=test.Electric0, mod.obj=fit4),
+                      HW.Add =acc.fun(test.data=test.Electric0, mod.obj=fit5),
+                      HW.Exp =acc.fun(test.data=test.Electric0, mod.obj=fit6),
+                      HW.Add.Damp =acc.fun(test.data=test.Electric0, mod.obj=fit7),
+                      HW.Exp.Damp =acc.fun(test.data=test.Electric0, mod.obj=fit8))
+kable(pred.accuracy, caption="The accuracy measures of various exponential smoothing models 
+      based on the testing data")
+```
+
+## Summary
+
+```{r}
+#Final Model
+final.model = hw(Electric.Model,h=12, seasonal="additive") 
+smoothing.parameter = final.model$model$par[1:3]
+kable(smoothing.parameter, caption="Estimated values of the smoothing parameters in
+      Holt-Winters linear trend with additive seasonality")
+```
+
+In summary, the updated values of the three smoothing parameters in the Holt-Winters linear trend and with exponentially damped seasonality using the entire data are given in the above table.
+
+
+
+
+
+
+

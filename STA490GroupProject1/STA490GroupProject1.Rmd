@@ -73,10 +73,17 @@ background-color: gray
 
 <font size = 6><b> Conclusions </b></font> <br>
 
-<font size = 6><b> Challenges </b></font> <br>
 </td>
 </tr>
 </table>
+
+---
+
+name:transition
+class:inverse8, center middle
+background-color: gray
+
+<h1 align="center"> Research Question </h1>
 
 ---
 class:inverse middle center
@@ -97,6 +104,13 @@ name:researchquestion
 
 ---
 
+name:transition
+class:inverse8, center middle
+background-color: gray
+
+<h1 align="center"> Background Information </h1>
+
+---
 class:inverse middle center
 name:background
 
@@ -107,9 +121,7 @@ name:background
 
  The data set tracks the monthly electric production in kilowatt-hours (kWh) from January 1973 to December 2010 for the state of New South Wales, Australia
 
- The data set contains 456 total observations
- 
- Observations were recorded on a monthly basis for this data set
+ This information can be used to forecast future energy usage rates outside of the date range of the time series
 
 <div style="text-align: middle;">
   <img src="img/australialogo_inPixio.png" width=150 height=100 align="center";">
@@ -123,6 +135,25 @@ name:DataSetDescription
 <h1 align = "center">Data Set Description</h1>
 <BR>
 
+There are 456 total observations in the data set
+
+There are only two variables in the data set, one of which is labeled as IPG2211A2N and the other is Date
+
+The variable IPG2211A2N tracks total monthly electric production in kilowatt-hours (kWh)
+
+The variable is measured and recorded once every month
+
+<div style="text-align: middle;">
+  <img src="img/australialogo_inPixio.png" width=150 height=100 align="center";">
+</div>
+
+---
+
+name:transition
+class:inverse8, center middle
+background-color: gray
+
+<h1 align="center"> Exploratory Data Analysis </h1>
 
 ---
 
@@ -143,6 +174,13 @@ name:EDA
 
 ---
 
+name:transition
+class:inverse8, center middle
+background-color: gray
+
+<h1 align="center"> Statistical Techniques </h1>
+
+---
 class:inverse center
 name:techniques
 
@@ -257,6 +295,65 @@ name:techniques
 
 ---
 
+class: center
+name:techniques
+
+<h1 align = "center">Final Model Selection</h1>
+<BR>
+
+$$
+P(x|Y=1) = \frac{\exp(\beta_0+\beta_1x_1+\cdots+\beta_kx_k)}{1+\exp(\beta_0+\beta_1x_1+\cdots+\beta_kx_k)}
+$$
+
+Level equation
+
+$$
+l_t = \alpha * (y_t/s_{t-m}) + (1 - \alpha) * (l_{t-1} + b_{t-1} + d_{t-1})
+$$
+
+Trend equation
+
+$$
+b_t = \beta * (l_t - l_{t-1}) + (1 - \beta) * b_{t-1}
+$$
+
+Damping equation
+
+$$
+d_t = \phi * (b_t - d_{t-1}) + (1 - \phi) * d_{t-1}
+$$
+
+Seasonal equation
+
+$$
+s_t = \gamma * (y_t/l_t) + (1 - \gamma) * s_{t-m}
+$$
+
+<table border = "2" bordercolor="black"  bgcolor="white"  width="90%">
+  <tr bordercolor="red">
+    <th>Model Coefficient</th>
+    <th>Alpha</th>
+    <th>Beta</th>
+    <th>Gamma</th>
+  </tr>
+  <tr>
+    <td>HW Exponential Damped</td>
+    <td>0.5235809</td>
+    <td>0.0001033</td>
+    <td>0.0001112</td>
+  </tr>
+</table>
+
+---
+
+name:transition
+class:inverse8, center middle
+background-color: gray
+
+<h1 align="center"> Results and Conclusions </h1>
+
+---
+
 class:inverse center
 name:results
 
@@ -281,7 +378,11 @@ There is also a trend of an overall increase in electric use over the progressio
 
 We also determined the optimal size of our training data set to be 109
 
-We also concluded that the Holt-Winters Exponential Damped model is our model of choise for forecasting future values of this data 
+We also concluded that the Holt-Winters Exponential Damped model is our model of choice for forecasting future values of this data 
+
+Overall, this model has applications for forecasting future values of electric production in NSW, Australia
+
+This model would need to be trained with a more recent data set to be more accurate for usage in 2024
 
 <div style="text-align: middle;">
   <img src="img/australialogo_inPixio.png" width=150 height=100;">
@@ -289,6 +390,7 @@ We also concluded that the Holt-Winters Exponential Damped model is our model of
 
 ---
 class: center, middle
+background-color: gray
 
 # Thanks!
 

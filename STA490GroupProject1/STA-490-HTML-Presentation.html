@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>STA 202 NFL 2022-2023 Season Fourth Down Analysis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Jack Ross " />
+    <script src="STA-490-HTML-Presentation_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer01.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# <font size = 7 color = "black">STA 202 NFL 2022-2023 Season Fourth Down Analysis</font>
+]
+.subtitle[
+## <img src="img/nfllogo.jpeg" width=100 height=100><img src="img/RMarkdown-logo.png" width=90 height=100> <img src="img/xaringan-logo.png" width=90 height=100>
+]
+.author[
+### <font size = 5 color = "black"> Jack Ross </font>
+]
+.institute[
+### <font size = 6 color = "black">West Chester University of Pennsylvania</font><br>
+]
+.date[
+### <font color = "black" size =4> Prepared for<br> </font> <br> <font color = "gold" size = 6> STA490: Statistics Capstone </font> <br> <br> <font color = "white" size = 3> Slides available at: <a href="https://rpubs.com/JackRoss" class="uri">https://rpubs.com/JackRoss</a> AND <a href="https://jackross10089.github.io/JackRoss/" class="uri">https://jackross10089.github.io/JackRoss/</a></font>
+]
+
+---
+
+
+
+
+
+class:inverse4, top
+
+&lt;h1 align="center"&gt; Table of Contents &lt;/h1&gt;
+&lt;BR&gt;
+
+.pull-left[
+- Research Question
+  
+- Background Information
+
+- Exploratory Data Analysis
+ 
+- Statistical Techniques
+
+- Results
+
+- Conclusions
+
+- Challenges and Future Work
+]
+
+&lt;div style="text-align: right;"&gt;
+  &lt;img src="img/nfllogo.jpeg" width=150 height=100;"&gt;
+&lt;/div&gt;
+
+
+
+
+---
+
+&lt;h1 align = "center"&gt;Reseach Question&lt;/h1&gt;
+&lt;BR&gt;
+
+.pull-left[
+
+&lt;li&gt; What is the strategical advantage of attempting an offensive play on fourth down to attempt to gain a first down?
+
+- To answer this question I researched
+
+- What percentage of fourth downs were not punts or field goals in the 2022 NFL season?
+
+- Who were the top 10 most effective teams in terms of "going for it" on fourth down last year?
+
+- What was the average distance to go for a first down on all offensive fourth down plays last year?
+
+- What was the frequency of "going for it" on fourth down relative to each quarter of the game?
+
+- What was the team total success rate on attempted fourth down plays last season? 
+
+]
+
+---
+name: Background
+
+&lt;h1 align="center"&gt; Background Information on National Football League&lt;/h1&gt;
+&lt;br&gt;
+
+.pull-left[
+
+Football can be viewed as a game of possessions; each possession can only be continued if the possessing team gains ten or more yards within a four-play sequence
+
+Each one of these plays is a ”down”
+]
+
+
+.pull-right[
+
+Teams often face a decision of what to do on fourth down, as this down can result in a loss of possession if the possessing team does not get a first down
+
+]
+
+
+
+---
+name: Data
+
+
+&lt;h1 align="center"&gt; Exploratory Data Analysis and Data Set &lt;/h1&gt;
+&lt;br&gt;&lt;br&gt;
+
+DATA SET
+
+&lt;li&gt; The NFL Plays data set contains 50,147 observations and 372 total variables for all the plays that were ran during the 2022-2023 NFL Regular and Post Season
+
+&lt;li&gt; The key variables I used for my analysis were down, rush.att, pass.att, posteam, ydstogo, yards_gained, qtr and play_type
+
+&lt;li&gt; By using these variables, I was able to collect more informational about the situational aspect of each one of the fourth down plays being considered from the data set
+
+EXPLORATORY DATA ANALYSIS
+
+- A “dummy variable” was created as a new variable in the data set. This variable was created by imposing a condition that made the outcome of the fourth down play either a zero or a one. A one indicates more yards were gained than the number of yards needed for a first down, a zero means not enough yards were gained for a first down.
+
+- The data set was filtered to only contain fourth down plays where a field goal,  punt, quarterback kneel, or no play did not occur for most of my analysis
+
+- After filtering the data set to include the specified observations, I found the mean of the ydstogo variable to answer one of the research questions
+---
+&lt;h1 align="center"&gt; Exploratory Data Analysis and Data Set Continued &lt;/h1&gt;
+&lt;br&gt;&lt;br&gt;
+- The data set was also subset into  Q1, Q2, Q3, and Q4 data sets, each one containing plays only from the first, second, third, or fourth quarter 
+- The variable ydstogo is very right skewed
+- This suggests that teams rarely go for it on fourth down when the distance is more than about five yards
+
+&lt;center&gt;
+&lt;img src="img/STA202VarSkewFinalProj.png" width=300 height=250&gt;
+&lt;/center&gt;
+
+---
+name: StatisticalTechniques
+
+&lt;h1 align="center"&gt; Statistical Tecniques Used in Analysis &lt;/h1&gt;
+
+&lt;h3 align = "left"&gt;Logistic Model&lt;/h3&gt;
+
+-Logistic regression was used to predict the contribution to the likelihood of a successful fourth down play from variables that were viewed as practically significant to the outcome of a fourth down play
+
+
+$$
+P(x|Y=1) = \frac{\exp(\beta_0+\beta_1x_1+\cdots+\beta_kx_k)}{1+\exp(\beta_0+\beta_1x_1+\cdots+\beta_kx_k)}
+$$
+
+- Mean and standard deviation were used to analyze the ydstogo variable  
+
+- Simple proportions were created within the R code used to analyze team’s success rates on fourth down
+
+---
+name: Results
+
+&lt;h1 align="center"&gt; Results From Analysis &lt;/h1&gt;
+
+What percentage of fourth downs were not punts or field goals in the 2022 NFL season?
+&lt;center&gt;
+&lt;img src="img/STA202NotPuntFGTable.png" width=1000 height=150&gt;
+&lt;/center&gt;
+
+What was the average distance to go for a first down on all offensive fourth down plays last year?
+&lt;center&gt;
+&lt;img src="img/STA202AvgDistTable.png" width=450 height=150&gt;
+&lt;/center&gt;
+
+
+---
+name: Results Continued
+
+&lt;h1 align="center"&gt; Results From Analysis &lt;/h1&gt;
+
+Frequency of rush and pass attempts on fourth down
+&lt;center&gt;
+&lt;img src="img/STA202PassRunTable.png" width=500 height=500&gt;
+&lt;/center&gt;
+---
+name: Results Continued
+
+&lt;h1 align="center"&gt; Results From Analysis &lt;/h1&gt;
+
+Who were the top 10 most effective teams in terms of "going for it" on fourth down last year?
+What was the team total success rate on attempted fourth down plays last season? 
+
+&lt;center&gt;
+&lt;img src="img/STA202SuccessTable.png" width=500 height=500&gt;
+&lt;/center&gt;
+
+---
+name: Results Continued
+
+&lt;h1 align="center"&gt; Results From Analysis &lt;/h1&gt;
+
+What was the frequency of "going for it" on fourth down relative to each quarter of the game?
+&lt;center&gt;
+&lt;img src="img/STA202FreqTable.png" width=1000 height=150&gt;
+&lt;/center&gt;
+
+Logistic Regression Model Results
+&lt;center&gt;
+&lt;img src="img/STA202LogModelTable.png" width=400 height=250&gt;
+&lt;/center&gt;
+
+---
+name: Conclusions
+
+&lt;h1 align="center"&gt; Conclusions &lt;/h1&gt;
+
+- The strategical advantage when going for it on fourth down is strongest when a team can confidently run the ball given the distance required for a first down
+
+- Passing the ball on fourth down is substantially less effective than running the ball on fourth down
+
+- This is a function of yards needed for a first down, as the lesser yards need for a possessing team to get a first down intuitively increases the likelihood of the first down being converted successfully
+
+- The lesser yards needed also increases the chance of a running play, and this explains some of the inflated potency of running the ball on fourth down
+
+- It is also important to note the intangible aspects of coaching a football game such as experience and overall situational awareness, this is best demonstrated by the Chiefs and the Rams having the highest fourth down success rates last year, as Andy Reid and Sean McVay are considered as two of the best coaches in the NFL
+
+
+---
+name: ChallengesFutureWork
+
+&lt;h1 align="center"&gt; Challenges and Future Work &lt;/h1&gt;
+
+- One of the biggest challenges was effectively visualizing the output that was generated from the analysis
+
+- Also, it was challenging at first to understand how to classify a successful fourth down within the data set
+
+- In the future, I would like to further understand some of the dependent modeling techniques that can be used to better consider all the situational factors that build into a fourth down decision
+
+- Also, it would be interesting to conduct the same analysis at the end of this current season with the data from this season to compare to last season
+
+---
+class: center, middle
+
+# Thanks!
+
+Slides created via the R packages:
+
+[**xaringan**](https://github.com/yihui/xaringan)&lt;br&gt;
+[gadenbuie/xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

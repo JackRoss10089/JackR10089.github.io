@@ -54,10 +54,17 @@ background-color: gray
 
 &lt;font size = 6&gt;&lt;b&gt; Conclusions &lt;/b&gt;&lt;/font&gt; &lt;br&gt;
 
-&lt;font size = 6&gt;&lt;b&gt; Challenges &lt;/b&gt;&lt;/font&gt; &lt;br&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
+
+---
+
+name:transition
+class:inverse8, center middle
+background-color: gray
+
+&lt;h1 align="center"&gt; Research Question &lt;/h1&gt;
 
 ---
 class:inverse middle center
@@ -78,6 +85,13 @@ name:researchquestion
 
 ---
 
+name:transition
+class:inverse8, center middle
+background-color: gray
+
+&lt;h1 align="center"&gt; Background Information &lt;/h1&gt;
+
+---
 class:inverse middle center
 name:background
 
@@ -88,9 +102,7 @@ name:background
 
  The data set tracks the monthly electric production in kilowatt-hours (kWh) from January 1973 to December 2010 for the state of New South Wales, Australia
 
- The data set contains 456 total observations
- 
- Observations were recorded on a monthly basis for this data set
+ This information can be used to forecast future energy usage rates outside of the date range of the time series
 
 &lt;div style="text-align: middle;"&gt;
   &lt;img src="img/australialogo_inPixio.png" width=150 height=100 align="center";"&gt;
@@ -104,6 +116,25 @@ name:DataSetDescription
 &lt;h1 align = "center"&gt;Data Set Description&lt;/h1&gt;
 &lt;BR&gt;
 
+There are 456 total observations in the data set
+
+There are only two variables in the data set, one of which is labeled as IPG2211A2N and the other is Date
+
+The variable IPG2211A2N tracks total monthly electric production in kilowatt-hours (kWh)
+
+The variable is measured and recorded once every month
+
+&lt;div style="text-align: middle;"&gt;
+  &lt;img src="img/australialogo_inPixio.png" width=150 height=100 align="center";"&gt;
+&lt;/div&gt;
+
+---
+
+name:transition
+class:inverse8, center middle
+background-color: gray
+
+&lt;h1 align="center"&gt; Exploratory Data Analysis &lt;/h1&gt;
 
 ---
 
@@ -124,6 +155,13 @@ name:EDA
 
 ---
 
+name:transition
+class:inverse8, center middle
+background-color: gray
+
+&lt;h1 align="center"&gt; Statistical Techniques &lt;/h1&gt;
+
+---
 class:inverse center
 name:techniques
 
@@ -238,6 +276,65 @@ name:techniques
 
 ---
 
+class: center
+name:techniques
+
+&lt;h1 align = "center"&gt;Final Model Selection&lt;/h1&gt;
+&lt;BR&gt;
+
+$$
+P(x|Y=1) = \frac{\exp(\beta_0+\beta_1x_1+\cdots+\beta_kx_k)}{1+\exp(\beta_0+\beta_1x_1+\cdots+\beta_kx_k)}
+$$
+
+Level equation
+
+$$
+l_t = \alpha * (y_t/s_{t-m}) + (1 - \alpha) * (l_{t-1} + b_{t-1} + d_{t-1})
+$$
+
+Trend equation
+
+$$
+b_t = \beta * (l_t - l_{t-1}) + (1 - \beta) * b_{t-1}
+$$
+
+Damping equation
+
+$$
+d_t = \phi * (b_t - d_{t-1}) + (1 - \phi) * d_{t-1}
+$$
+
+Seasonal equation
+
+$$
+s_t = \gamma * (y_t/l_t) + (1 - \gamma) * s_{t-m}
+$$
+
+&lt;table border = "2" bordercolor="black"  bgcolor="white"  width="90%"&gt;
+  &lt;tr bordercolor="red"&gt;
+    &lt;th&gt;Model Coefficient&lt;/th&gt;
+    &lt;th&gt;Alpha&lt;/th&gt;
+    &lt;th&gt;Beta&lt;/th&gt;
+    &lt;th&gt;Gamma&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;HW Exponential Damped&lt;/td&gt;
+    &lt;td&gt;0.5235809&lt;/td&gt;
+    &lt;td&gt;0.0001033&lt;/td&gt;
+    &lt;td&gt;0.0001112&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+---
+
+name:transition
+class:inverse8, center middle
+background-color: gray
+
+&lt;h1 align="center"&gt; Results and Conclusions &lt;/h1&gt;
+
+---
+
 class:inverse center
 name:results
 
@@ -262,7 +359,11 @@ There is also a trend of an overall increase in electric use over the progressio
 
 We also determined the optimal size of our training data set to be 109
 
-We also concluded that the Holt-Winters Exponential Damped model is our model of choise for forecasting future values of this data 
+We also concluded that the Holt-Winters Exponential Damped model is our model of choice for forecasting future values of this data 
+
+Overall, this model has applications for forecasting future values of electric production in NSW, Australia
+
+This model would need to be trained with a more recent data set to be more accurate for usage in 2024
 
 &lt;div style="text-align: middle;"&gt;
   &lt;img src="img/australialogo_inPixio.png" width=150 height=100;"&gt;
@@ -270,6 +371,7 @@ We also concluded that the Holt-Winters Exponential Damped model is our model of
 
 ---
 class: center, middle
+background-color: gray
 
 # Thanks!
 
