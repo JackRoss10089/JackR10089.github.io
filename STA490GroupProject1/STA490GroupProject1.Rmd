@@ -295,35 +295,30 @@ name:techniques
 
 ---
 
-class: center
+class:center
 name:techniques
 
 <h1 align = "center">Final Model Selection</h1>
-<BR>
 
-$$
-P(x|Y=1) = \frac{\exp(\beta_0+\beta_1x_1+\cdots+\beta_kx_k)}{1+\exp(\beta_0+\beta_1x_1+\cdots+\beta_kx_k)}
-$$
-
-Level equation
+Level Equation
 
 $$
 l_t = \alpha * (y_t/s_{t-m}) + (1 - \alpha) * (l_{t-1} + b_{t-1} + d_{t-1})
 $$
 
-Trend equation
+Trend Equation
 
 $$
 b_t = \beta * (l_t - l_{t-1}) + (1 - \beta) * b_{t-1}
 $$
 
-Damping equation
+Damping Equation
 
 $$
 d_t = \phi * (b_t - d_{t-1}) + (1 - \phi) * d_{t-1}
 $$
 
-Seasonal equation
+Seasonal Equation
 
 $$
 s_t = \gamma * (y_t/l_t) + (1 - \gamma) * s_{t-m}
