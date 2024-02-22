@@ -281,29 +281,11 @@ name:techniques
 
 &lt;h1 align = "center"&gt;Final Model Selection&lt;/h1&gt;
 
-Level Equation
+&lt;div style="text-align: middle;"&gt;
+  &lt;img src="img/hw-exponential-smoothing.jpg" width=500 height=400 align="center";"&gt;
+&lt;/div&gt;
 
-$$
-l_t = \alpha * (y_t/s_{t-m}) + (1 - \alpha) * (l_{t-1} + b_{t-1} + d_{t-1})
-$$
 
-Trend Equation
-
-$$
-b_t = \beta * (l_t - l_{t-1}) + (1 - \beta) * b_{t-1}
-$$
-
-Damping Equation
-
-$$
-d_t = \phi * (b_t - d_{t-1}) + (1 - \phi) * d_{t-1}
-$$
-
-Seasonal Equation
-
-$$
-s_t = \gamma * (y_t/l_t) + (1 - \gamma) * s_{t-m}
-$$
 
 &lt;table border = "2" bordercolor="black"  bgcolor="white"  width="90%"&gt;
   &lt;tr bordercolor="red"&gt;
