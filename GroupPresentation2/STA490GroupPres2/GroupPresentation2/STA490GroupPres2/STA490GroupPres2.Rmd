@@ -153,22 +153,6 @@ class:inverse middle center
 name:sampling plan overview
 <font size = 5>
 
-<h1 align = "center">Cluster Sample</h1>
-
-The population is divided into distinct and homogeneous clusters
-
-Clusters are randomly selected then all units in the clusters are considered for the sample
-
-<div style="text-align: middle;">
-  <img src="img/clusterexample.png" width=650 height=325;">
-</div>
-
----
-
-class:inverse middle center
-name:sampling plan overview
-<font size = 5>
-
 <h1 align = "center">Systematic Sample</h1>
 
 Number entire population, similar to simple random sample
@@ -194,7 +178,7 @@ For the stratified sampling methods, Federal Bank Region will be used as the str
 
 Approximately 10% proportions of each sub-population were used for the samples
 
-All four previously mentioned sampling methods will be tested
+All three previously mentioned sampling methods will be tested
 
 <div style="text-align: middle;">
   <img src="img/samplingplan.png" width=450 height=225;">
@@ -609,140 +593,6 @@ name:sampling results
         </tr>
         <!-- You can add more rows and columns as needed -->
     </table>
----
-class:inverse middle center
-name:sampling results
-<h1 style="font-size: 40px; color: white; font-weight: bold;">Cluster Sample Results</h1>
-    <table border="1"> <!-- Add border="1" to display borders -->
-        <tr>
-            <th>Region</th>
-            <th>Status Unknown</th>
-            <th>Defaulted</th>
-            <th>Paid in Full</th>
-            <th>Default Rate</th>
-            <th>Sample Size</th>
-            <th>Population Size</th>
-        </tr>
-        <tr>
-            <td>Atlanta</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>56,380</td>
-        </tr>
-        <tr>
-            <td>Boston</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>84,451</td>
-        </tr>
-        <tr>
-            <td>Chicago</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>141,003</td>
-        </tr>
-        <tr>
-            <td>Cleveland</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>58,461</td>
-        </tr>
-        <tr>
-            <td>Dallas</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>47,790</td>
-        </tr>
-        <tr>
-            <td>Kansas City</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>38,711</td>
-        </tr>
-        <tr>
-            <td>Minneapolis</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>56,208</td>
-        </tr>
-        <tr>
-            <td>New York</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>49,028</td>
-        </tr>
-        <tr>
-            <td>Philadelphia</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>128,604</td>
-        </tr>
-        <tr>
-            <td>Richmond</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>42,028</td>
-        </tr>
-        <tr>
-            <td>San Francisco</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>184,066</td>
-        </tr>
-        <tr>
-            <td>St. Louis</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>10,704</td>
-        </tr>
-        <tr>
-            <td>Unknown</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>1,730</td>
-        </tr>
-        <!-- You can add more rows and columns as needed -->
-    </table>
-    
 ---
 
 class:inverse middle center
