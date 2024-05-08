@@ -1,0 +1,410 @@
+---
+title: "Prediction and Analysis of Employee Attrition"
+subtitle: '<img src="img/RMarkdown-logocopy.png" width=90 height=100> <img src="img/logo_1copy.png" width=90 height=100>' 
+author: Jack Ross, Angelo Saporito, and Ian Vanwright
+institute: '<font size = 6 color = "black">West Chester University of Pennsylvania</font><br> '
+date: ' <font color = "black" size =4> Prepared for<br> </font> <br> <font color = "gold" size = 6> STA490: Statistics Capstone </font> <br> <br> <font color = "white" size = 3> '
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+
+---
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+if (!require("knitr")) {
+   install.packages("knitr")
+   library(knitr)
+}
+if (!require("pander")) {
+   install.packages("pander")
+   library(pander)
+}
+if (!require("plotly")) {
+   install.packages("plotly")
+   library(plotly)
+}
+if (!require("ggplot2")) {
+   install.packages("ggplot2")
+   library(ggplot2)
+}
+if (!require("xaringanthemer")) {
+   install.packages("xaringanthemer")
+   library(xaringanthemer)
+}
+knitr::opts_chunk$set(
+                  fig.width=3, 
+                  fig.height=3, 
+                  fig.retina=12,
+                  out.width = "100%",
+                  cache = FALSE,
+                  echo = TRUE,
+                  message = FALSE, 
+                  warning = FALSE,
+                  hiline = TRUE
+                  )
+```
+
+
+name:toc
+class:inverse8, top
+background-color: white
+
+<h1 align="center"> Table of Contents </h1>
+<BR>
+<table align="center", width = "50%">
+<tr>
+<td style="text-size:50px; line-height: 1.5; font-variant:small-caps">
+
+<font size = 6><b> Introduction </b></font> <br>
+
+<font size = 6><b> Research Question </b></font> <br>
+  
+<font size = 6><b> Exploratory Data Analysis </b></font> <br>
+
+<font size = 6><b> Study Methods </b></font> <br>
+ 
+<font size = 6><b> Study Results </b></font> <br>
+
+<font size = 6><b> Discussion and Recommendations </b></font> <br>
+
+</td>
+</tr>
+</table>
+
+---
+
+class:inverse middle center
+name: Introduction
+
+<h1 align="center"> Introduction </h1>
+
+<font size = 5>This study examines an IBM data set that contains 1470 observations of 35 variables all related to People Analytics
+
+The data set contains data such as age, gender, job satisfaction, environment satisfaction, education field, job role, income, overtime, years in current role, relationship status, and more
+
+This study aims to identify factors that are associated with and can be used to predict employee attrition.
+
+Employee attrition is defined as the departure of employees from an organization for any reason (voluntary or involuntary), including resignation, termination, death, or retirement
+
+<div style="text-align: middle;">
+  <img src="img/att.png" width=450 height=125;">
+</div>
+---
+
+class:inverse middle center
+name: Research Questions
+
+<h1 align="center"> Research Questions </h1>
+<font size = 5>
+
+This study aims to answer:
+
+What are the factors that can be used to predict employee attrition?
+
+How does employee satisfaction differ among the employees who experience attrition and those who do not?
+
+<div style="text-align: middle;">
+  <img src="img/attritionImg.png" width=750 height=300;">
+</div>
+
+---
+
+class:inverse middle center
+name: Exploratory Data Analysis
+
+<h1 align="center"> Exploratory Data Analysis </h1>
+<font size = 5>
+No missing values in the dataset
+
+All variables were used to create an initial model, stepwise regression was then performed on the model to reduce the amount of factors in the model
+
+The variable Attrition was converted from a character variable with "yes" and "no" response to a numeric variable with 0 and 1 responses 
+
+Education, Environment Satisfaction, Job Satisfaction, Performance Rating, Work Life Balance, Relationship Satisfaction, and Job Involvement were all converted into factors with levels 1 to 5
+
+
+---
+
+class:inverse middle center
+name: Study Methods
+
+<h1 align="center"> Study Methods </h1>
+<font size = 5>
+
+With the new reduced data set, a final logistic regression model was created to find factors useful in predicting employee attrition
+
+The factors in the model were then tested for multicollinearity by measuring the Variance Inflation Factor (VIF) of each factor in the model
+
+This reduced model will be used as our final model
+
+The final data set was split into two subsets and comparisons of the mean values of each variable in the final model were analyzed to assess impact of each factor in the model 
+
+---
+
+class:inverse middle center
+name: First Logistic Regression Model
+
+<h1 align="center"> Initial Logistic Regression Model </h1>
+<font size = 2>
+
+|                                |   Estimate| Std. Error|    z value| Pr(>&#124;z&#124;)|
+|:-------------------------------|----------:|----------:|----------:|------------------:|
+|(Intercept)                     |  1.9804298|  1.1696353|  1.6932028|          0.0904169|
+|Age                             | -0.0317903|  0.0133831| -2.3754091|          0.0175295|
+|BusinessTravelTravel_Frequently |  1.9369218|  0.4088095|  4.7379572|          0.0000022|
+|BusinessTravelTravel_Rarely     |  1.0498143|  0.3771071|  2.7838629|          0.0053716|
+|DistanceFromHome                |  0.0455526|  0.0106632|  4.2719338|          0.0000194|
+|EducationFieldLife Sciences     | -0.6291999|  0.7535688| -0.8349602|          0.4037401|
+|EducationFieldMarketing         | -0.2010606|  0.8029918| -0.2503893|          0.8022863|
+|EducationFieldMedical           | -0.7381718|  0.7528080| -0.9805579|          0.3268108|
+|EducationFieldOther             | -0.7366142|  0.8201926| -0.8980991|          0.3691327|
+|EducationFieldTechnical Degree  |  0.2758071|  0.7748836|  0.3559336|          0.7218903|
+|EnvironmentSatisfaction         | -0.4317101|  0.0824682| -5.2348696|          0.0000002|
+|GenderMale                      |  0.3815914|  0.1835787|  2.0786254|          0.0376518|
+|JobInvolvement                  | -0.5337906|  0.1219304| -4.3778303|          0.0000120|
+|JobRoleHuman Resources          |  1.3468860|  0.6547408|  2.0571286|          0.0396739|
+|JobRoleLaboratory Technician    |  1.5329994|  0.4362220|  3.5142642|          0.0004410|
+|JobRoleManager                  |  0.1549911|  0.6580516|  0.2355304|          0.8137971|
+|JobRoleManufacturing Director   |  0.2473483|  0.5296672|  0.4669882|          0.6405083|
+---
+
+class:inverse middle center
+name: Initial Logistic Regression Model
+
+<font size = 2>
+
+|                                |   Estimate| Std. Error|    z value| Pr(>&#124;z&#124;)|
+|:-------------------------------|----------:|----------:|----------:|------------------:|
+|JobRoleResearch Director        | -1.0268375|  0.9178536| -1.1187377|          0.2632520|
+|JobRoleResearch Scientist       |  0.5938878|  0.4426276|  1.3417323|          0.1796828|
+|JobRoleSales Executive          |  1.0251863|  0.4455984|  2.3006959|          0.0214088|
+|JobRoleSales Representative     |  1.9816936|  0.5074086|  3.9055184|          0.0000940|
+|JobSatisfaction                 | -0.4192449|  0.0809451| -5.1793757|          0.0000002|
+|MaritalStatusMarried            |  0.3156427|  0.2654225|  1.1892084|          0.2343577|
+|MaritalStatusSingle             |  1.1359823|  0.3426398|  3.3153837|          0.0009152|
+|NumCompaniesWorked              |  0.1958575|  0.0384818|  5.0896094|          0.0000004|
+|OverTimeYes                     |  1.9744082|  0.1925847| 10.2521538|          0.0000000|
+|RelationshipSatisfaction        | -0.2542027|  0.0820712| -3.0973441|          0.0019526|
+|StockOptionLevel                | -0.2212456|  0.1560079| -1.4181689|          0.1561415|
+|TotalWorkingYears               | -0.0646813|  0.0264156| -2.4486058|          0.0143410|
+|TrainingTimesLastYear           | -0.1888530|  0.0729344| -2.5893543|          0.0096156|
+|WorkLifeBalance                 | -0.3631433|  0.1234618| -2.9413403|          0.0032680|
+|YearsAtCompany                  |  0.0895842|  0.0380448|  2.3547054|          0.0185374|
+|YearsInCurrentRole              | -0.1476201|  0.0447455| -3.2991087|          0.0009699|
+|YearsSinceLastPromotion         |  0.1806403|  0.0416851|  4.3334496|          0.0000147|
+|YearsWithCurrManager            | -0.1316692|  0.0469033| -2.8072476|          0.0049967|
+
+---
+
+class:inverse middle center
+name: First Reduced Logistic Regression Model
+
+<h1 align="center"> Reduced Logistic Regression Model </h1>
+<font size = 2>
+
+|                          |   Estimate| Std. Error|    z value| Pr(>&#124;z&#124;)|
+|:-------------------------|----------:|----------:|----------:|------------------:|
+|(Intercept)               |  2.6738955|  0.6255946|  4.2741665|          0.0000192|
+|Age                       | -0.0185940|  0.0118038| -1.5752478|          0.1151993|
+|Education2                |  0.0059851|  0.2790867|  0.0214453|          0.9828904|
+|Education3                |  0.1469982|  0.2465705|  0.5961711|          0.5510609|
+|Education4                |  0.0815212|  0.2701189|  0.3017974|          0.7628065|
+|Education5                | -0.1956305|  0.5457036| -0.3584923|          0.7199749|
+|DistanceFromHome          |  0.0275854|  0.0089880|  3.0691426|          0.0021467|
+|EnvironmentSatisfaction2  | -0.7392888|  0.2299217| -3.2153940|          0.0013027|
+|EnvironmentSatisfaction3  | -0.8306965|  0.2060551| -4.0314284|          0.0000554|
+|EnvironmentSatisfaction4  | -0.8428996|  0.2079852| -4.0526912|          0.0000506|
+|GenderMale                |  0.1578349|  0.1567139|  1.0071531|          0.3138612|
+|HourlyRate                | -0.0010476|  0.0037713| -0.2777939|          0.7811706|
+|JobSatisfaction2          | -0.4939056|  0.2280542| -2.1657376|          0.0303312|
+|JobSatisfaction3          | -0.5504594|  0.2041116| -2.6968543|          0.0069998|
+|JobSatisfaction4          | -0.9861235|  0.2167940| -4.5486662|          0.0000054|
+|TotalWorkingYears         | -0.0694649|  0.0161518| -4.3007518|          0.0000170|
+|PerformanceRating4        | -0.0577360|  0.2109239| -0.2737291|          0.7842928|
+|WorkLifeBalance2          | -0.7217212|  0.3050425| -2.3659696|          0.0179829|
+|WorkLifeBalance3          | -0.9898230|  0.2816725| -3.5140912|          0.0004413|
+|WorkLifeBalance4          | -0.6597968|  0.3459299| -1.9073140|          0.0564799|
+|RelationshipSatisfaction2 | -0.4263600|  0.2365594| -1.8023377|          0.0714923|
+|RelationshipSatisfaction3 | -0.3469683|  0.2112734| -1.6422717|          0.1005337|
+|RelationshipSatisfaction4 | -0.3798055|  0.2157359| -1.7605118|          0.0783211|
+|JobInvolvement2           | -0.8866030|  0.2918025| -3.0383663|          0.0023786|
+|JobInvolvement3           | -1.1903548|  0.2733875| -4.3540932|          0.0000134|
+|JobInvolvement4           | -1.8218847|  0.3946002| -4.6170393|          0.0000039|
+
+---
+
+class:inverse middle center
+name: First Reduced Logistic Regression Model
+
+<font size = 2>
+
+|                          |   Estimate| Std. Error|    z value| Pr(>&#124;z&#124;)|
+|:-------------------------|----------:|----------:|----------:|------------------:|
+|WorkLifeBalance2          | -0.7217212|  0.3050425| -2.3659696|          0.0179829|
+|WorkLifeBalance3          | -0.9898230|  0.2816725| -3.5140912|          0.0004413|
+|WorkLifeBalance4          | -0.6597968|  0.3459299| -1.9073140|          0.0564799|
+|RelationshipSatisfaction2 | -0.4263600|  0.2365594| -1.8023377|          0.0714923|
+|RelationshipSatisfaction3 | -0.3469683|  0.2112734| -1.6422717|          0.1005337|
+|RelationshipSatisfaction4 | -0.3798055|  0.2157359| -1.7605118|          0.0783211|
+|JobInvolvement2           | -0.8866030|  0.2918025| -3.0383663|          0.0023786|
+|JobInvolvement3           | -1.1903548|  0.2733875| -4.3540932|          0.0000134|
+|JobInvolvement4           | -1.8218847|  0.3946002| -4.6170393|          0.0000039|
+
+
+---
+
+class:inverse middle center
+name: Stepwise Reduced Logistic Regression Model
+
+<h1 align="center"> Stepwise Reduced Logistic Regression Model </h1>
+<font size = 2>
+
+|                         |   Estimate| Std. Error|   z value| Pr(>&#124;z&#124;)|
+|:------------------------|----------:|----------:|---------:|------------------:|
+|(Intercept)              |  2.5370396|  0.5359042|  4.734129|          0.0000022|
+|Age                      | -0.0200728|  0.0114031| -1.760290|          0.0783587|
+|DistanceFromHome         |  0.0265871|  0.0089219|  2.979969|          0.0028828|
+|EnvironmentSatisfaction2 | -0.7491162|  0.2284774| -3.278732|          0.0010427|
+|EnvironmentSatisfaction3 | -0.8392566|  0.2047997| -4.097940|          0.0000417|
+|EnvironmentSatisfaction4 | -0.8481473|  0.2065616| -4.106025|          0.0000403|
+|JobSatisfaction2         | -0.4933031|  0.2264829| -2.178104|          0.0293983|
+|JobSatisfaction3         | -0.5450063|  0.2024692| -2.691799|          0.0071068|
+|JobSatisfaction4         | -0.9804666|  0.2148040| -4.564472|          0.0000050|
+|TotalWorkingYears        | -0.0676799|  0.0159945| -4.231453|          0.0000232|
+|WorkLifeBalance2         | -0.7511781|  0.3036065| -2.474183|          0.0133541|
+|WorkLifeBalance3         | -1.0207244|  0.2806169| -3.637430|          0.0002754|
+|WorkLifeBalance4         | -0.7098908|  0.3448806| -2.058367|          0.0395549|
+|JobInvolvement2          | -0.8721864|  0.2907022| -3.000275|          0.0026974|
+|JobInvolvement3          | -1.1822906|  0.2731956| -4.327635|          0.0000151|
+|JobInvolvement4          | -1.7985930|  0.3918127| -4.590441|          0.0000044|
+
+---
+
+class:inverse middle center
+name: VIF
+
+<h1 align="center"> Variance Inflation Factor for Final Model </h1>
+<font size = 3>
+
+|                        |     GVIF| Df| GVIF^(1/(2*Df))|
+|:-----------------------|--------:|--:|---------------:|
+|Age                     | 1.617890|  1|        1.271963|
+|DistanceFromHome        | 1.008461|  1|        1.004222|
+|EnvironmentSatisfaction | 1.028991|  3|        1.004774|
+|JobSatisfaction         | 1.035723|  3|        1.005867|
+|TotalWorkingYears       | 1.628339|  1|        1.276064|
+|WorkLifeBalance         | 1.023632|  3|        1.003901|
+|JobInvolvement          | 1.036705|  3|        1.006026|
+
+No values greater than 5 suggests that there is no concern regarding multicollinearity
+---
+
+class:inverse middle center
+name:attrition comparison
+<h1 style="font-size: 40px; color: white; font-weight: bold;">Comparison of Attrition Groups</h1>
+    <table border="1"> <!-- Add border="1" to display borders -->
+        <tr>
+            <th>Variable</th>
+            <th>"No" Mean</th>
+            <th>"Yes" Mean</th>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>37.56</td>
+            <td>33.61</td>
+        </tr>
+        <tr>
+            <td>Distance From Home</td>
+            <td>8.92</td>
+            <td>10.63</td>
+        </tr>
+        <tr>
+            <td>Environment Satisfaction</td>
+            <td>2.77</td>
+            <td>2.46</td>
+        </tr>
+        <tr>
+            <td>Job Satisfaction</td>
+            <td>2.79</td>
+            <td>2.47</td>
+        </tr>
+        <tr>
+            <td>Total Working Years</td>
+            <td>11.86</td>
+            <td>8.24</td>
+        </tr>
+        <tr>
+            <td>Work Life Balance</td>
+            <td>2.78</td>
+            <td>2.66</td>
+        </tr>
+        <tr>
+            <td>Job Involvement</td>
+            <td>2.77</td>
+            <td>2.52</td>
+        </tr>
+        
+---
+
+class:inverse middle center
+name: Results
+
+<h1 align="center"> Results From Analysis </h1>
+<font size = 5>
+
+First model, not included in presentation, contained all 34 variables as explanatory variables. Stepwise regression was used to select 20 of the original 34 variables as significant variables in the model
+
+From these 20 variables, our team selected 12 variables based on practical intuition and the stepwise regression to include in the next reduced model. We then performed stepwise regression on the reduced model to produce our final model with 7 explanatory variables
+
+Final model included the variables, Age, Distance From Home, Environment Satisfaction, Job Satisfaction, Total Working Years, Work Life Balance, and Job Involvement
+
+We consider these variables to be the most relevant predictors of employee attrition when used in a logistic regression model
+---
+
+class:inverse middle center
+name: Results
+
+<h1 align="center"> Results From Analysis </h1>
+<font size = 5>
+
+An example of the interpretation of the model coefficients is, for a one year increase in age, the log odds of attrition decrease by -0.0200728, according to the final model
+
+When comparing the group in the data who experienced attrition and the group that did not, we can see that the average age of those who experienced attrition was about four years less than those who did not
+
+Environment Satisfaction, Job Satisfaction, Work-Life Balance, and Job Involvement all had higher average ratings in those groups who did not experience attrition than those who did
+
+Employees who experience attrition also had a longer average distance from home and had more average working years
+
+---
+
+class:inverse middle center
+name: Results
+
+<h1 align="center"> Discussion and Recommendations </h1>
+<font size = 5>
+
+Overall, we can conclude that focusing on controlling factors regarding Age, Distance From Home, Environment Satisfaction, Job Satisfaction, Total Working Years, Work Life Balance, and Job Involvement will allow a company to have the greatest impact on whether or not their employees experience attrition
+
+In general, these factors align practically with most perceptions of attrition, as it would be expected that employees who are overall less satisfied with their job are more likely to leave their job
+
+One caveat is retirement, as we would expect attrition to increase closer to retirement age, but the information in this data set did not suggest that to be true as our model interpretation suggests a decrease in the odds of attrition as age increases
+
+This is likely a result of younger employees being more likely to make a change in their job than longer tenured employees who may have more incentives to stay at their current job
+
+---
+
+class:inverse middle center
+name: Conclusion
+
+<h1 align="center"> Thank You </h1>
+<h1 align="center"> Questions? </h1>
+<font size = 5>
+
+
+
